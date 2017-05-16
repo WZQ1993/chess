@@ -1,0 +1,88 @@
+group "com.three.chess"
+version  '0.0.1-SNAPSHOT'
+buildscript{
+	ext {
+		springBootVersion = '2.0.0.BUILD-SNAPSHOT'
+	}
+	repositories{
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		jcenter()
+	}
+	dependencies {
+		//构建脚本的依赖
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+	}
+}
+subprojects{//
+	repositories {
+		//换阿里云的仓库
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		jcenter()
+	}
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	sourceCompatibility = 1.8
+	repositories {
+		//换阿里云的仓库
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		jcenter()
+	}
+	//基础依赖
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+		//门面日志框架，spring-boot默认引用了logback，slf4j将绑定logback
+		compile "org.slf4j:slf4j-api:1.7.24"
+	}
+	//排除依赖
+	configurations {
+		//排除其他日志记录框架
+		all*.exclude group: 'commons-logging', module: 'commons-logging'
+		all*.exclude group: 'log4j', module: 'log4j'
+	}
+}
+//基础模块，每个模块需引用
+project(':common'){
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-actuator')
+		compile('org.springframework.boot:spring-boot-actuator-docs')
+		compile('org.springframework.boot:spring-boot-starter-aop')
+		compile('org.springframework.boot:spring-boot-starter-cache')
+		compile('org.springframework.boot:spring-boot-starter-data-redis')
+		compile('org.springframework.boot:spring-boot-starter-jdbc')
+		compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0')
+		runtime('mysql:mysql-connector-java')
+		compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+		compile "com.google.guava:guava:21.0"
+		compile "com.alibaba:fastjson:1.2.24"
+	}
+}
+//web模块，对外服务引用
+project(':common-web'){
+	dependencies {
+		compile project(':common')
+		compile('org.springframework.boot:spring-boot-starter-security')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+		testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	}
+}
+//用户模块
+project(':sso'){
+	dependencies {
+		project(':common-web')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+		testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	}
+}
+//ext 其他业务模块
+

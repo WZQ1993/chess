@@ -1,0 +1,4 @@
+rootProject.name = 'chess'
+include 'common'
+include 'common-web'
+include 'sso'

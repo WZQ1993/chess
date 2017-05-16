@@ -1,0 +1,21 @@
+#配置——对应com.three.config.Config类
+chess:
+  ##业务配置
+  buss:
+    commom: #通用
+      key_1: value_1
+      key_2: value_2
+        key_2_1: value_2_1
+    sso:  #sso项目配置
+      key_1: value_1
+      key_2: value_2
+        key_2_1: value_2_1
+  ##服务器配置
+  server:
+    key_1: value_1
+  ##redis配置
+  redis:
+    servers:  127.0.0.1:7000
+  ##Spring配置
+  ##DB配置
+
