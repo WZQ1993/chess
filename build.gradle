@@ -63,6 +63,8 @@ project(':common'){
 		testCompile('org.springframework.boot:spring-boot-starter-test')
 		compile "com.google.guava:guava:21.0"
 		compile "com.alibaba:fastjson:1.2.24"
+		compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
+		compile group: 'io.netty', name: 'netty-all', version: '4.1.11.Final'
 	}
 }
 //web模块，对外服务引用

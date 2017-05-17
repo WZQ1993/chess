@@ -1,0 +1,35 @@
+<configuration>
+    <property resource="version.properties" />
+    <appender name="APP_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>log/app.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>log/app.%d{yyyy-MM-dd}.log.gz</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss} %-5level ${version} [%thread]%logger{16} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="MERTIC_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>log/mertic.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>log/mertic.%d{yyyy-MM-dd}.log.gz</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss} %-5level ${version} [%thread]%logger{16} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!--<logger name="com.kugou.nsq" level="WARN" >-->
+        <!--<appender-ref ref="FILE"/>-->
+    <!--</logger>-->
+
+    <root name="root" level="WARN">
+        <appender-ref ref="APP_FILE" />
+    </root>
+</configuration>
