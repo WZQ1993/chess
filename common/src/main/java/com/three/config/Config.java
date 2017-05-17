@@ -1,13 +1,14 @@
 package com.three.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
  * <p>配置文件映射</p>
  *	@author wangziqing
  */
-@Component
+@ConfigurationProperties(prefix = "chess")
 public class Config {
     //配置模块
     @Autowired
@@ -15,14 +16,12 @@ public class Config {
     @Autowired
     private Server server;
 
-    @Component
+    @ConfigurationProperties(prefix = "chess.redis")
     public class Redis{//配置模块详细注入
-        @Value("${config.redis.servers}")
         public String servers;
     }
-    @Component
+    @ConfigurationProperties(prefix = "chess.buss")
     public class Server{
-        @Value("${config.server.key_1}")
         public String key_1;
     }
 }
